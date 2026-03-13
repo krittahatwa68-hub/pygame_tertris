@@ -1,62 +1,62 @@
-# Tetris Game - OOP & SOLID Principles Demonstration
+# เกม Tetris - การสาธิต OOP และหลัก SOLID
 
-## 📋 Overview
+## 📋 ภาพรวม
 
-This is a comprehensive Tetris game implementation using Python and Pygame, specifically designed to demonstrate the application of **Object-Oriented Programming (OOP)** principles and **SOLID** design principles in game development.
+นี่คือการใช้งาน Tetris อย่างครอบคลุมโดยใช้ Python และ Pygame โดยออกแบบมาเพื่อสาธิตการประยุกต์ หลักการ **Object-Oriented Programming (OOP)** และหลัก **SOLID** ในการพัฒนาเกม
 
-## 👥 Team Information
+## 👥 ข้อมูลทีม
 
-**Team Name:** Game Development Team
+**ชื่อทีม:** ทีมพัฒนาเกม
 
-**Team Members:**
-- Lead Developer: Comprehensive Game Architecture
-- Contributing Developer: Educational Code Examples
+**สมาชิกทีม:**
+- นักพัฒนาหลัก: สถาปัตยกรรมเกมอย่างครอบคลุม
+- นักพัฒนาร่วม: ตัวอย่างรหัสการศึกษา
 
-**Project Focus:** Educational demonstration of software engineering best practices through game implementation
+**โฟกัสโครงการ:** สาธิตการศึกษาเกี่ยวกับแนวทางปฏิบัติที่ดีที่สุดของวิศวกรรมซอฟต์แวร์ผ่านการใช้งานเกม
 
-## 🎯 Project Objectives
+## 🎯 วัตถุประสงค์ของโครงการ
 
-This project demonstrates professional software engineering practices:
+โครงการนี้สาธิตแนวทางปฏิบัติด้านวิศวกรรมซอฟต์แวร์ที่มืออาชีพ:
 
-1. **Object-Oriented Programming (OOP)**
-   - Inheritance
-   - Polymorphism
-   - Encapsulation
-   - Composition/Aggregation
+1. **การเขียนโปรแกรมเชิงวัตถุ (OOP)**
+   - การสืบทอด
+   - เหตุการณ์หลาย
+   - การห่อหุ้ม
+   - องค์ประกอบ/การรวมกลุ่ม
 
-2. **SOLID Principles**
-   - **S**ingle Responsibility Principle
-   - **O**pen/Closed Principle
-   - **L**iskov Substitution Principle
-   - **I**nterface Segregation Principle
-   - **D**ependency Inversion Principle
+2. **หลัก SOLID**
+   - หลัก **S** ความรับผิดชอบเดียว
+   - หลัก **O** เปิด/ปิด
+   - หลัก **L** การแทนที่ของ Liskov
+   - หลัก **I** การแบ่งส่วนของอินเตอร์เฟส
+   - หลัก **D** การกลับของการพึ่งพา
 
-## 🏗️ Architecture
+## 🏗️ สถาปัตยกรรม
 
-### Project Structure
+### โครงสร้างของโครงการ
 
 ```
 pygame_tetris/
-├── main.py                 # Entry point (demonstrates orchestration)
-├── requirements.txt        # Python dependencies
-├── pyproject.toml         # Project configuration (PEP 517/518)
-├── README.md              # This file
+├── main.py                 # จุดเข้า (สาธิตการประสานงาน)
+├── requirements.txt        # การพึ่งพา Python
+├── pyproject.toml         # การกำหนดค่าโครงการ (PEP 517/518)
+├── README.md              # ไฟล์นี้
 └── src/
     ├── __init__.py
-    ├── config.py          # Configuration constants (Single Responsibility)
-    ├── pieces.py          # Tetromino classes (Inheritance, Polymorphism)
-    ├── board.py           # Game board logic (Encapsulation)
-    ├── renderer.py        # Rendering system (Single Responsibility)
-    ├── input_handler.py   # Input handling (Single Responsibility)
-    └── game.py            # Main game controller (Composition, Dependency Injection)
+    ├── config.py          # ค่าคงที่การกำหนดค่า (ความรับผิดชอบเดียว)
+    ├── pieces.py          # ชั้นเรียน Tetromino (การสืบทอด เหตุการณ์หลาย)
+    ├── board.py           # ตรรกะกระดานเกม (การห่อหุ้ม)
+    ├── renderer.py        # ระบบการแสดงผล (ความรับผิดชอบเดียว)
+    ├── input_handler.py   # การจัดการอินพุต (ความรับผิดชอบเดียว)
+    └── game.py            # ตัวควบคุมเกมหลัก (องค์ประกอบ การฉีดการพึ่งพา)
 ```
 
-### Design Patterns & Principles Applied
+### รูปแบบการออกแบบและหลักการที่ประยุกต์
 
-#### **OOP: Inheritance & Polymorphism**
+#### **OOP: การสืบทอดและเหตุการณ์หลาย**
 
 ```python
-# Abstract Base Class
+# ชั้นเรียนพื้นฐาน
 class Tetromino(ABC):
     @abstractmethod
     def _define_blocks(self) -> List[List[Tuple[int, int]]]:
@@ -65,27 +65,27 @@ class Tetromino(ABC):
     def get_color(self) -> Tuple[int, int, int]:
         pass
 
-# Concrete Implementations (Subclasses)
-class IPiece(Tetromino):      # Cyan I-piece
-class OPiece(Tetromino):      # Yellow O-piece
-class TPiece(Tetromino):      # Magenta T-piece
-# ... etc for S, Z, J, L pieces
+# การใช้งานที่เป็นรูปธรรม (ชั้นเรียนย่อย)
+class IPiece(Tetromino):      # I-piece สีน้ำเงิน
+class OPiece(Tetromino):      # O-piece สีเหลือง
+class TPiece(Tetromino):      # T-piece สีม่วงแดง
+# ... เป็นต้น สำหรับ S, Z, J, L pieces
 ```
 
-- **Polymorphism**: Each piece type implements its own rotation logic and color while adhering to the common interface
-- **Liskov Substitution**: All pieces can be used interchangeably through the `Tetromino` interface
+- **เหตุการณ์หลาย**: แต่ละประเภทชิ้นส่วนใช้งานตรรกะการหมุนและสีของตัวเองในขณะที่ปฏิบัติตามอินเตอร์เฟสทั่วไป
+- **การแทนที่ของ Liskov**: ชิ้นส่วนทั้งหมดสามารถใช้แทนกันได้ผ่านอินเตอร์เฟส `Tetromino`
 
-#### **OOP: Encapsulation**
+#### **OOP: การห่อหุ้ม**
 
 ```python
 class Tetromino(ABC):
     def __init__(self, x: int, y: int):
-        self._x = x              # Private attributes
+        self._x = x              # แอตทริบิวต์ส่วนตัว
         self._y = y
         self._rotation = 0
         self._blocks = self._define_blocks()
     
-    @property                     # Property decorators for controlled access
+    @property                     # ตัวจัดการคุณสมบัติเพื่อการเข้าถึงที่ควบคุม
     def x(self) -> int:
         return self._x
     
@@ -94,213 +94,213 @@ class Tetromino(ABC):
         self._y = y
 ```
 
-#### **OOP: Composition**
+#### **OOP: องค์ประกอบ**
 
 ```python
 class Game:
     def __init__(self):
-        # Composition: Game "has-a" Board, Renderer, InputHandler
+        # องค์ประกอบ: เกม "มี" Board, Renderer, InputHandler
         self._board = Board()
         self._renderer = Renderer()
         self._input_handler = InputHandler()
         self._current_piece: Tetromino = None
 ```
 
-#### **Design Patterns**
+#### **รูปแบบการออกแบบ**
 
-- **Factory Pattern**: `PieceFactory` for creating Tetromino instances
-- **Dependency Injection**: Components receive dependencies rather than creating them
+- **Factory Pattern**: `PieceFactory` สำหรับการสร้าง Tetromino instances
+- **Dependency Injection**: ส่วนประกอบได้รับการพึ่งพาแทนที่จะสร้างพวกมัน
 
-#### **SOLID Principles**
+#### **หลัก SOLID**
 
-| Principle | Implementation |
+| หลัก | การใช้งาน |
 |-----------|----------------|
-| **S**ingle Responsibility | Each class has one reason to change: `config.py` (configuration), `board.py` (board state), `renderer.py` (rendering), `input_handler.py` (input) |
-| **O**pen/Closed | `Tetromino` base class is open for extension (new piece types) but closed for modification |
-| **L**iskov Substitution | All `Tetromino` subclasses can replace the base class in `Game` logic |
-| **I**nterface Segregation | Small, focused classes with specific responsibilities |
-| **D**ependency Inversion | `Game` depends on abstractions (`Board`, `Renderer`) not concrete implementations |
+| **S**ความรับผิดชอบเดียว | แต่ละชั้นมีเหตุผลหนึ่งข้ออย่างเดียวในการเปลี่ยนแปลง: `config.py` (การกำหนดค่า), `board.py` (สถานะบอร์ด), `renderer.py` (การแสดงผล), `input_handler.py` (อินพุต) |
+| **O**เปิด/ปิด | ชั้นเรียนพื้นฐาน `Tetromino` เปิดสำหรับการขยายขนาด (ประเภทชิ้นส่วนใหม่) แต่ปิดสำหรับการแก้ไข |
+| **L**การแทนที่ของ Liskov | ชั้นเรียนย่อย `Tetromino` ทั้งหมดสามารถแทนที่ชั้นเรียนพื้นฐานในตรรกะ `Game` |
+| **I**การแบ่งส่วนของอินเตอร์เฟส | ชั้นเรียนขนาดเล็กที่มีความมุ่งเน้นและมีความรับผิดชอบเฉพาะเจาะจง |
+| **D**การกลับของการพึ่งพา | `Game` พึ่งพาการแยกส่วน (`Board`, `Renderer`) ไม่ใช่การใช้งานที่เป็นรูปธรรม |
 
-## 🚀 Installation
+## 🚀 การติดตั้ง
 
-### Prerequisites
+### ข้อกำหนดเบื้องต้น
 
-- Python 3.8 or higher
-- pip (Python package manager)
+- Python 3.8 หรือสูงกว่า
+- pip (ตัวจัดการแพ็คเกจ Python)
 
-### Setup Instructions
+### คำแนะนำการติดตั้ง
 
-#### Option 1: Using requirements.txt
+#### ตัวเลือกที่ 1: ใช้ requirements.txt
 
 ```bash
-# Navigate to project directory
+# นำทางไปยังไดเรกทอรีโครงการ
 cd pygame_tetris
 
-# Create virtual environment (recommended)
+# สร้างสภาพแวดล้อมเสมือน (แนะนำ)
 python -m venv venv
 
-# Activate virtual environment
-# On Windows:
+# เปิดใช้งานสภาพแวดล้อมเสมือน
+# บน Windows:
 venv\Scripts\activate
-# On macOS/Linux:
+# บน macOS/Linux:
 source venv/bin/activate
 
-# Install dependencies
+# ติดตั้งการพึ่งพา
 pip install -r requirements.txt
 ```
 
-#### Option 2: Using pyproject.toml (PEP 517/518)
+#### ตัวเลือกที่ 2: ใช้ pyproject.toml (PEP 517/518)
 
 ```bash
-# Navigate to project directory
+# นำทางไปยังไดเรกทอรีโครงการ
 cd pygame_tetris
 
-# Create virtual environment
+# สร้างสภาพแวดล้อมเสมือน
 python -m venv venv
 
-# Activate virtual environment
-# On Windows:
+# เปิดใช้งานสภาพแวดล้อมเสมือน
+# บน Windows:
 venv\Scripts\activate
-# On macOS/Linux:
+# บน macOS/Linux:
 source venv/bin/activate
 
-# Install the package in development mode
+# ติดตั้งแพ็คเกจในโหมดพัฒนา
 pip install -e .
 
-# Optional: Install with development dependencies
+# ตัวเลือก: ติดตั้งพร้อมการพึ่งพาสำหรับการพัฒนา
 pip install -e ".[dev]"
 ```
 
-#### Option 3: Direct Dependencies Installation
+#### ตัวเลือกที่ 3: การติดตั้งการพึ่งพาโดยตรง
 
 ```bash
 pip install pygame>=2.1.0
 ```
 
-## 🎮 Usage
+## 🎮 การใช้งาน
 
-### Running the Game
+### เรียกใช้เกม
 
 ```bash
 python main.py
 ```
 
-### Game Controls
+### ตัวควบคุมเกม
 
-| Key | Action |
+| คีย์ | การกระทำ |
 |-----|--------|
-| **← →** | Move piece left/right |
-| **↓** | Move piece down faster |
-| **Z** | Rotate piece |
-| **Space** | Drop piece instantly |
-| **P** | Pause/Resume game |
-| **ESC** or Close Window | Exit game |
+| **← →** | ย้ายชิ้นซ้าย/ขวา |
+| **↓** | ย้ายชิ้นลงเร็วขึ้น |
+| **Z** | หมุนชิ้น |
+| **Space** | วางชิ้นทันที |
+| **P** | หยุดชั่วคราว/ดำเนินการเกม |
+| **ESC** หรือปิดหน้าต่าง | ออกจากเกม |
 
-### Game Rules
+### กฎของเกม
 
-1. Pieces fall from the top of the board
-2. Players can move left/right and rotate falling pieces
-3. When a piece reaches the bottom or another piece, it locks in place
-4. Completed rows (fully filled with blocks) are cleared
-5. Score increases based on number of rows cleared at once
-6. Game ends when pieces reach the top of the board
+1. ชิ้นส่วนตกจากด้านบนของบอร์ด
+2. ผู้เล่นสามารถย้ายไปทางซ้าย/ขวาและหมุนชิ้นที่ตกลงมา
+3. เมื่อชิ้นชนกับด้านล่างหรือชิ้นอื่น มันจะล็อกเข้าที่
+4. แถวที่สมบูรณ์ (เต็มไปด้วยบล็อก) จะถูกลบ
+5. คะแนนเพิ่มขึ้นตามจำนวนแถวที่ลบพร้อมกัน
+6. เกมจบลงเมื่อชิ้นส่วนถึงด้านบนของบอร์ด
 
-## 🎓 Learning Points
+## 🎓 จุดเรียนรู้
 
-### Understanding the Code
+### การทำความเข้าใจรหัส
 
-1. **pieces.py**: Study inheritance and polymorphism
-   - `Tetromino` is the abstract base class
-   - Seven concrete classes (IPiece, OPiece, etc.) inherit from it
-   - Each implements `_define_blocks()` with different rotation patterns
+1. **pieces.py**: ศึกษาการสืบทอดและเหตุการณ์หลาย
+   - `Tetromino` เป็นชั้นเรียนพื้นฐาน
+   - ชั้นเรียนที่เป็นรูปธรรมเจ็ดชั้น (IPiece, OPiece, ฯลฯ) สืบทอดจากชั้นเรียนนั้น
+   - แต่ละชั้นใช้ `_define_blocks()` ด้วยรูปแบบการหมุนที่แตกต่างกัน
 
-2. **board.py**: Learn about encapsulation
-   - Private `_grid` attribute
-   - Public methods for interaction: `is_valid_position()`, `lock_piece()`, etc.
+2. **board.py**: เรียนรู้เกี่ยวกับการห่อหุ้ม
+   - แอตทริบิวต์ส่วนตัว `_grid`
+   - วิธีการสาธารณะสำหรับการโต้ตอบ: `is_valid_position()`, `lock_piece()` เป็นต้น
 
-3. **game.py**: Study composition and orchestration
-   - Contains all game components through composition
-   - Dependency injection pattern in action
+3. **game.py**: ศึกษาองค์ประกอบและการประสานงาน
+   - มีส่วนประกอบทั้งหมดของเกมผ่านองค์ประกอบ
+   - รูปแบบการฉีดการพึ่งพาในการกระทำ
 
-4. **renderer.py**: Single responsibility in action
-   - Only handles rendering
-   - Receives game state, doesn't manage it
+4. **renderer.py**: ความรับผิดชอบเดียวในการกระทำ
+   - จัดการเฉพาะการแสดงผล
+   - รับสถานะเกม ไม่ได้จัดการมัน
 
-5. **input_handler.py**: Separation of concerns
-   - Only converts input events to actions
-   - Game logic remains in `Game` class
+5. **input_handler.py**: การแยกความกังวล
+   - แปลงเฉพาะเหตุการณ์อินพุตเป็นการกระทำ
+   - ตรรกะของเกมยังคงอยู่ในชั้นเรียน `Game`
 
-## 🔧 Extension Points
+## 🔧 จุดนำเข้า
 
-The architecture makes it easy to extend:
+สถาปัตยกรรมทำให้ง่ายต่อการขยาย:
 
 ```python
-# Add a new piece type:
+# เพิ่มประเภทชิ้นส่วนใหม่:
 class NewPiece(Tetromino):
     def _define_blocks(self):
-        # Define rotations
+        # กำหนดการหมุน
         pass
     
     def get_color(self):
         return NEW_COLOR
 
-# Register in PieceFactory
+# ลงทะเบียนใน PieceFactory
 PieceFactory._pieces['NEW'] = NewPiece
 
-# Add new difficulty level - modify config.py
+# เพิ่มระดับความยากใหม่ - แก้ไข config.py
 DIFFICULTY_INSANE = 0.2
 
-# Add new input action - modify InputHandler
+# เพิ่มการกระทำอินพุตใหม่ - แก้ไข InputHandler
 ```
 
-## 📦 Dependencies
+## 📦 การพึ่งพา
 
-- **pygame** (>=2.1.0): Game development library for graphics, sound, and input handling
+- **pygame** (>=2.1.0): ไลบรารีการพัฒนาเกมสำหรับกราฟิก เสียง และการจัดการอินพุต
 
-Optional development dependencies (in `pyproject.toml`):
-- pytest: Unit testing framework
-- pytest-cov: Code coverage
-- black: Code formatting
-- flake8: Linting
-- mypy: Static type checking
+การพึ่งพาการพัฒนาแบบตัวเลือก (ใน `pyproject.toml`):
+- pytest: เฟรมเวิร์กการทดสอบหน่วย
+- pytest-cov: การครอบคลุมรหัส
+- black: การจัดรูปแบบรหัส
+- flake8: การตรวจสอบ
+- mypy: การตรวจสอบประเภทแบบคงที่
 
-## 📄 License
+## 📄 ลิขสิทธิ์
 
-MIT License - See project files for details
+MIT License - ดูไฟล์โครงการสำหรับรายละเอียด
 
-## 🤝 Contributing
+## 🤝 การมีส่วนร่วม
 
-To improve this codebase:
+เพื่อปรับปรุงโค้ดนี้:
 
-1. Follow the established architecture patterns
-2. Maintain SOLID principles
-3. Add unit tests for new features
-4. Update documentation
+1. ทำตามรูปแบบสถาปัตยกรรมที่กำหนดไว้
+2. รักษาหลัก SOLID
+3. เพิ่มการทดสอบหน่วยสำหรับฟีเจอร์ใหม่
+4. อัปเดตเอกสาร
 
-## 🎯 Educational Resources
+## 🎯 ทรัพยากรการศึกษา
 
-For deeper understanding of the concepts used:
+เพื่อความเข้าใจที่ลึกซึ้งยิ่งขึ้นของแนวคิดที่ใช้:
 
-- **OOP Concepts**: Consider reading "Python Object-Oriented Programming" by Duncan
-- **SOLID Principles**: "Clean Code" by Robert C. Martin
-- **Design Patterns**: "Design Patterns: Elements of Reusable Object-Oriented Software" by Gang of Four
+- **แนวคิด OOP**: พิจารณาอ่าน "Python Object-Oriented Programming" โดย Duncan
+- **หลัก SOLID**: "Clean Code" โดย Robert C. Martin
+- **รูปแบบการออกแบบ**: "Design Patterns: Elements of Reusable Object-Oriented Software" โดย Gang of Four
 
-## ⚠️ Notes
+## ⚠️ หมายเหตุ
 
-- This is an educational project demonstrating best practices
-- Performance optimizations for production use may vary
-- Graphics and sound are intentionally minimal to focus on architecture
-- Type hints are included for clarity (Python 3.8+)
+- นี่คือโครงการการศึกษาที่สาธิตแนวทางปฏิบัติที่ดีที่สุด
+- การเพิ่มประสิทธิภาพประสิทธิการสำหรับการใช้งานสำเร็จรูปอาจแตกต่างกัน
+- กราฟิกและเสียงน้อยที่สุดเพื่อมุ่งเน้นไปที่สถาปัตยกรรม
+- รวมคำใบ้ประเภทเพื่อความชัดเจน (Python 3.8+)
 
-## 📞 Support
+## 📞 สนับสนุน
 
-For questions or issues:
-1. Review the source code comments
-2. Check the architecture documentation above
-3. Study the specific module implementing a feature
+สำหรับคำถามหรือปัญหา:
+1. ตรวจสอบความเห็นของรหัสต้นฉบับ
+2. ตรวจสอบเอกสารสถาปัตยกรรมข้างต้น
+3. ศึกษาโมดูลเฉพาะที่ใช้ฟีเจอร์
 
 ---
 
-**Version:** 1.0.0  
-**Created:** 2024  
-**Focus:** OOP & SOLID Principles Educational Demonstration
+**เวอร์ชัน:** 1.0.0  
+**สร้าง:** 2024  
+**โฟกัส:** การสาธิตการศึกษาหลัก OOP และ SOLID
