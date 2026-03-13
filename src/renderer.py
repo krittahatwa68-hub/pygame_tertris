@@ -12,6 +12,7 @@ from src.config import (
 )
 from src.board import Board
 from src.pieces import Tetromino
+from src.menu_screen import MenuScreen, GameOverScreen
 
 
 class Renderer:
@@ -34,6 +35,8 @@ class Renderer:
         self._clock: Optional[pygame.time.Clock] = None
         self._font: Optional[pygame.font.Font] = None
         self._small_font: Optional[pygame.font.Font] = None
+        self._menu_screen: Optional[MenuScreen] = None
+        self._game_over_screen: Optional[GameOverScreen] = None
     
     def init(self) -> None:
         """Initialize pygame and create window"""
@@ -43,6 +46,8 @@ class Renderer:
         self._clock = pygame.time.Clock()
         self._font = pygame.font.Font(None, 36)
         self._small_font = pygame.font.Font(None, 24)
+        self._menu_screen = MenuScreen(self._screen, self._font)
+        self._game_over_screen = GameOverScreen(self._screen, self._font)
     
     def render(self, board: Board, current_piece: Optional[Tetromino], 
                score: int, lines: int, game_state: int) -> None:
@@ -155,6 +160,54 @@ class Renderer:
     def get_clock(self) -> pygame.time.Clock:
         """Get pygame clock"""
         return self._clock
+    
+    def render_menu(self) -> None:
+        """Render menu screen"""
+        if self._menu_screen:
+            self._menu_screen.render()
+    
+    def update_menu(self, mouse_pos: tuple) -> None:
+        """Update menu state"""
+        if self._menu_screen:
+            self._menu_screen.update(mouse_pos)
+    
+    def handle_menu_click(self, mouse_pos: tuple) -> Optional[str]:
+        """
+        Handle menu click
+        
+        Args:
+            mouse_pos: Mouse position
+            
+        Returns:
+            'start', 'exit', or None
+        """
+        if self._menu_screen:
+            return self._menu_screen.handle_click(mouse_pos)
+        return None
+    
+    def render_game_over(self, score: int, lines: int, high_score: int = 0) -> None:
+        """Render game over screen"""
+        if self._game_over_screen:
+            self._game_over_screen.render(score, lines, high_score)
+    
+    def update_game_over(self, mouse_pos: tuple) -> None:
+        """Update game over screen state"""
+        if self._game_over_screen:
+            self._game_over_screen.update(mouse_pos)
+    
+    def handle_game_over_click(self, mouse_pos: tuple) -> Optional[str]:
+        """
+        Handle game over screen click
+        
+        Args:
+            mouse_pos: Mouse position
+            
+        Returns:
+            'menu', 'exit', or None
+        """
+        if self._game_over_screen:
+            return self._game_over_screen.handle_click(mouse_pos)
+        return None
     
     def quit(self) -> None:
         """Clean up and quit pygame"""

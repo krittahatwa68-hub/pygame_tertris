@@ -18,6 +18,7 @@ class InputAction(Enum):
     PAUSE = 6
     QUIT = 7
     NONE = 8
+    CLICK = 9  # For menu button clicks
 
 
 class InputHandler:
@@ -30,6 +31,8 @@ class InputHandler:
         """Initialize input handler"""
         self._last_move_time = 0
         self._move_delay = 100  # milliseconds
+        self._mouse_pos = (0, 0)
+        self._mouse_clicked = False
     
     def handle_events(self) -> InputAction:
         """
@@ -39,10 +42,16 @@ class InputHandler:
             InputAction representing player's input
         """
         current_time = pygame.time.get_ticks()
+        self._mouse_clicked = False
+        self._mouse_pos = pygame.mouse.get_pos()
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return InputAction.QUIT
+            
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                self._mouse_clicked = True
+                return InputAction.CLICK
             
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
@@ -59,3 +68,11 @@ class InputHandler:
                     return InputAction.PAUSE
         
         return InputAction.NONE
+    
+    def get_mouse_pos(self) -> tuple:
+        """Get current mouse position"""
+        return self._mouse_pos
+    
+    def is_mouse_clicked(self) -> bool:
+        """Check if mouse was clicked"""
+        return self._mouse_clicked

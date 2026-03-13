@@ -9,8 +9,10 @@ from src.board import Board
 from src.pieces import Tetromino, PieceFactory
 from src.renderer import Renderer
 from src.input_handler import InputHandler, InputAction
+from src.sound_manager import SoundManager
+from src.score_manager import ScoreManager
 from src.config import (
-    BOARD_WIDTH, GAME_RUNNING, GAME_PAUSED, GAME_OVER, FPS,
+    BOARD_WIDTH, GAME_MENU, GAME_RUNNING, GAME_PAUSED, GAME_OVER, FPS,
     DIFFICULTY_NORMAL
 )
 
@@ -34,9 +36,11 @@ class Game:
         self._board = Board()
         self._renderer = Renderer()
         self._input_handler = InputHandler()
+        self._sound_manager = SoundManager()
+        self._score_manager = ScoreManager()
         
         # Game state
-        self._state = GAME_RUNNING
+        self._state = GAME_MENU
         self._score = 0
         self._lines_cleared = 0
         self._difficulty = difficulty
@@ -51,7 +55,7 @@ class Game:
     def _initialize_game(self) -> None:
         """Initialize game state"""
         self._renderer.init()
-        self._spawn_new_piece()
+        self._sound_manager.init()
     
     def _spawn_new_piece(self) -> None:
         """Spawn new piece at top of board"""
@@ -71,6 +75,28 @@ class Game:
         if action == InputAction.QUIT:
             return False
         
+        # Handle menu state
+        if self._state == GAME_MENU:
+            if action == InputAction.CLICK:
+                result = self._renderer.handle_menu_click(self._input_handler.get_mouse_pos())
+                if result == 'start':
+                    self._start_game()
+                    self._sound_manager.play_menu_select()
+                elif result == 'exit':
+                    return False
+            return True
+        
+        # Handle game over state
+        if self._state == GAME_OVER:
+            if action == InputAction.CLICK:
+                result = self._renderer.handle_game_over_click(self._input_handler.get_mouse_pos())
+                if result == 'menu':
+                    self._state = GAME_MENU
+                    self._sound_manager.play_menu_select()
+                elif result == 'exit':
+                    return False
+            return True
+        
         if action == InputAction.PAUSE:
             self._state = GAME_PAUSED if self._state == GAME_RUNNING else GAME_RUNNING
         
@@ -86,10 +112,21 @@ class Game:
             self._move_piece(0, 1)
         elif action == InputAction.ROTATE:
             self._rotate_piece()
+            self._sound_manager.play_rotate()
         elif action == InputAction.DROP:
             self._drop_piece()
+            self._sound_manager.play_drop()
         
         return True
+    
+    def _start_game(self) -> None:
+        """Start a new game"""
+        self._board = Board()
+        self._score = 0
+        self._lines_cleared = 0
+        self._fall_time = 0
+        self._state = GAME_RUNNING
+        self._spawn_new_piece()
     
     def _move_piece(self, dx: int, dy: int) -> None:
         """
@@ -140,6 +177,7 @@ class Game:
         if rows_cleared > 0:
             self._lines_cleared += rows_cleared
             self._score += rows_cleared * rows_cleared * 100
+            self._sound_manager.play_line_clear()
         
         # Spawn new piece
         self._spawn_new_piece()
@@ -147,6 +185,8 @@ class Game:
         # Check game over
         if not self._board.is_valid_position(self._current_piece):
             self._state = GAME_OVER
+            self._sound_manager.play_game_over()
+            self._score_manager.update_high_score(self._score)
     
     def update(self) -> bool:
         """
@@ -159,12 +199,18 @@ class Game:
         if not self._handle_input():
             return False
         
-        # Skip update if paused
-        if self._state == GAME_PAUSED:
+        # Update menu
+        if self._state == GAME_MENU:
+            self._renderer.update_menu(self._input_handler.get_mouse_pos())
             return True
         
-        # Skip update if game over
+        # Update game over
         if self._state == GAME_OVER:
+            self._renderer.update_game_over(self._input_handler.get_mouse_pos())
+            return True
+        
+        # Skip update if paused
+        if self._state == GAME_PAUSED:
             return True
         
         # Auto-drop piece
@@ -177,13 +223,19 @@ class Game:
     
     def render(self) -> None:
         """Render current game state"""
-        self._renderer.render(
-            self._board,
-            self._current_piece,
-            self._score,
-            self._lines_cleared,
-            self._state
-        )
+        if self._state == GAME_MENU:
+            self._renderer.render_menu()
+        elif self._state == GAME_OVER:
+            high_score = self._score_manager.get_high_score()
+            self._renderer.render_game_over(self._score, self._lines_cleared, high_score)
+        else:
+            self._renderer.render(
+                self._board,
+                self._current_piece,
+                self._score,
+                self._lines_cleared,
+                self._state
+            )
     
     def run(self) -> None:
         """Main game loop"""
@@ -195,6 +247,7 @@ class Game:
             self.render()
             clock.tick(FPS)
         
+        self._sound_manager.quit()
         self._renderer.quit()
     
     @property
