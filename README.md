@@ -7,16 +7,16 @@
 
 ---
 
-## 👥 ทีมพัฒนา
+## 👥 ข้อมูลทีมพัฒนา
 
-### ชื่อทีม: **ทีมพัฒนาเกม**
+**ชื่อทีม:** ทีมตัวต่อ
 
-### สมาชิกทีม:
+### สมาชิกทีม
 
-| ลำดับที่ | ชื่อ | รหัสประจำตัว | ตำแหน่ง | หน้าที่ที่รับผิดชอบ |
-|---------|------|-----------|---------|-----------------|
-| 1 | กฤตหัสต์ วัฒนาไชย | 68114540038 | นักพัฒนาหลัก | **Architecture & Design Patterns**: ออกแบบสถาปัตยกรรมระบบเกมตามหลัก SOLID; **Core Game Engine**: พัฒนาเคล่นเล่นเกม (Game Loop) และระบบจัดการสถานะ; **Game Logic**: ตรรกะการเล่นเกม ระบบ 7-Bag Randomizer และระบบการหมุน (SRS); **Event System & State Machine**: ระบบเหตุการณ์และการจัดการสถานะของเกม |
-| 2 | กิตติพงษ์ เลี้ยงหิรัญถาวร | 68114540777 | นักพัฒนาร่วม | **UI/UX & Rendering**: ระบบการแสดงผลเกมและจอเมนู; **Input Handling & Controls**: จัดการการรับอินพุตและการควบคุมเกม; **Audio System**: ระบบเสียงและผลเสียงของเกม; **Game Systems**: ระบบการชนกัน ระบบแรงโน้มถ่วง และระบบการให้คะแนน; **Testing & Quality Assurance**: ทดสอบและการตรวจสอบคุณภาพของโค้ด |
+| ลำดับ | ชื่อ - สกุล | รหัสนักศึกษา | หน้าที่ที่รับผิดชอบ |
+|------|-----------|-----------|------------------|
+| 1 | กฤตหัสต์ วัฒนาไชย | 68114540038 | **Game Logic & Entity Systems** - การพัฒนาตรรกะเกมหลัก ระบบเอนทิตี (Tetromino), ระบบกระดานเล่น (Board), ระบบการชนกัน (Collision System), และ Randomizer โดยยึดหลัก SOLID Principles ผ่าน Polymorphism และ Composition Pattern |
+| 2 | กิตติพงษ์ เลี้ยงหิรัญถาวร | 68114540777 | **Core Engine & Rendering Systems** - การพัฒนาเครื่องเล่นเกมหลัก (Game Engine), ระบบการจัดการสถานะ (State Machine), ระบบเหตุการณ์ (Event System), ระบบการแสดงผล (Renderer) และการจัดการอินพุต (Input Handler) โดยยึดหลัก SOLID Principles ผ่าน Single Responsibility และ Observer Pattern |
 
 ---
 
@@ -357,7 +357,6 @@ board_state = [
 2. **SOLID Principles**: วิธีการสร้างโค้ดที่ยืดหยุ่นและขยายได้
 3. **Game Development**: Game Loop, State Management, Collision Detection
 4. **Software Architecture**: Modular Design, Separation of Concerns
-5. **Best Practices**: Type Hints, Documentation, Testing
 
 ---
 
