@@ -84,7 +84,6 @@ class Renderer:
 
         self._draw_ui(score, lines, level, held_piece, next_piece)
 
-        pygame.display.flip()
 
     def _draw_board(self, board: Board) -> None:
 
@@ -269,7 +268,6 @@ class Renderer:
     def render_pause(self) -> None:
         if self._pause_screen:
             self._pause_screen.render()
-            pygame.display.flip()
 
     def update_pause(self, mouse_pos: tuple) -> None:
         if self._pause_screen:

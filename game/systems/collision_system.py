@@ -58,27 +58,17 @@ class CollisionSystem:
     
     @staticmethod
     def get_landing_position(piece, board) -> int:
-        """
-        Get Y position where piece will land
-        
-        Args:
-            piece: Tetromino piece
-            board: Game board
-            
-        Returns:
-            Y position where piece will land
-        """
-        test_y = piece.y
-        max_attempts = BOARD_HEIGHT + 10
-        attempts = 0
-        
-        while attempts < max_attempts:
-            if CollisionSystem.check_collision(piece, board, 0, 1):
-                break
-            test_y += 1
-            attempts += 1
-        
-        return test_y
+
+        original_y = piece.y
+
+        while not CollisionSystem.check_collision(piece, board, 0, 1):
+            piece.move(0, 1)
+
+        landing_y = piece.y
+
+        piece.set_position(piece.x, original_y)
+
+        return landing_y
     
     @staticmethod
     def get_ghost_piece_blocks(piece, board) -> List[Tuple[int, int]]:

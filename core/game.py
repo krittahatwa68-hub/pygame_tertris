@@ -298,13 +298,15 @@ class Game:
             self._ghost_piece = CollisionSystem.get_ghost_piece_blocks(self._current_piece, self._board)
 
     def render(self) -> None:
-        """Render current game state"""
+
         state = self._state_machine.get_state()
 
         if state == GAME_MENU:
+
             self._renderer.render_menu()
 
         elif state == GAME_RUNNING or state == GAME_PAUSED:
+
             self._renderer.render(
                 self._board,
                 self._current_piece,
@@ -316,18 +318,20 @@ class Game:
                 self._gravity.get_level(),
                 state
             )
-            
-            # If paused, draw the pause overlay on top of the game!
+
             if state == GAME_PAUSED:
                 self._renderer.render_pause()
 
+            pygame.display.flip()   # ← flip หลังสุด
+
         elif state == GAME_OVER:
+
             self._renderer.render_game_over(
                 self._score,
                 self._lines,
                 self._gravity.get_level(),
                 self._scoring.get_high_score()
-            )
+            )   
 
     def run(self) -> None:
 
