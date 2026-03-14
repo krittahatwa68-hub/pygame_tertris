@@ -13,13 +13,15 @@ class GravitySystem:
     # Gravity values (cells per frame) at different levels
     # Lower values = faster gravity
     GRAVITY_LEVELS = {
-        0: 0.016667,   # Level 0: ~1 cell per 60 frames (1/60)
-        1: 0.02,       # Level 1
-        5: 0.035,      # Level 5
-        10: 0.05,      # Level 10
-        15: 0.065,     # Level 15
-        20: 0.1,       # Level 20
-        30: 0.15,      # Level 30+
+        0: 0.016667,   # Level 0: ~1 วิ/ช่อง
+        1: 0.03,       # Level 1: เร็วขึ้นเกือบ 2 เท่า
+        2: 0.05,       # Level 2
+        3: 0.08,       # Level 3
+        4: 0.12,       # Level 4
+        5: 0.18,       # Level 5
+        10: 0.5,       # Level 10: ครึ่งช่องต่อเฟรม (เร็วมาก)
+        15: 1.0,       # Level 15: ตกเฟรมละ 1 ช่อง
+        20: 20.0,      # Level 20+: ตกถึงพื้นทันที (20G)
     }
     
     # Lock delay: frames to wait before locking piece after bottom contact
@@ -42,12 +44,9 @@ class GravitySystem:
     
     def _calculate_gravity(self) -> float:
         """
-        Calculate gravity based on level
-        
-        Returns:
-            Gravity value (cells per frame)
+        Calculate gravity based on level and scale infinitely for high levels.
         """
-        # Get appropriate gravity level
+        # 1. หาค่า base_gravity จากดิกชันนารี (หาระดับที่สูงที่สุดที่ไม่เกินเลเวลปัจจุบัน)
         for level_threshold in sorted(self.GRAVITY_LEVELS.keys(), reverse=True):
             if self._level >= level_threshold:
                 base_gravity = self.GRAVITY_LEVELS[level_threshold]
@@ -55,7 +54,14 @@ class GravitySystem:
         else:
             base_gravity = self.GRAVITY_LEVELS[0]
         
-        # Apply difficulty multiplier
+        # 2. ปลดล็อกขีดจำกัด (Infinite Scaling)
+        # ถ้าเลเวลทะลุ 30 ไปแล้ว ให้บวกความเร็วเพิ่มเลเวลละ 0.01
+        if self._level > 30:
+            extra_levels = self._level - 30
+            base_gravity += (extra_levels * 0.01)
+        
+        # 3. นำไปคูณกับความยาก (Difficulty)
+        # ตัวอย่าง: เลเวล 10 (0.05) * โหมด Hard (1.5) = 0.075 (เร็วขึ้น!)
         return base_gravity * self._difficulty
     
     def update(self, delta_time: float) -> int:

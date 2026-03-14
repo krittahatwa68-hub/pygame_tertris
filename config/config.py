@@ -47,10 +47,9 @@ GAME_RUNNING = 1
 GAME_PAUSED = 2
 GAME_OVER = 3
 
-# Difficulty Levels
-DIFFICULTY_EASY = 1.0
-DIFFICULTY_NORMAL = 0.7
-DIFFICULTY_HARD = 0.4
+DIFFICULTY_EASY = 0.7    # ช้าลง 30%
+DIFFICULTY_NORMAL = 1.0  # ความเร็วปกติ
+DIFFICULTY_HARD = 1.5    # เร็วขึ้น 50%
 
 # Button Configuration
 BUTTON_WIDTH = 150
