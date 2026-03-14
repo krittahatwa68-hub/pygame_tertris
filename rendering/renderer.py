@@ -65,7 +65,9 @@ class Renderer:
         score: int,
         lines: int,
         level: int,
-        game_state: int
+        game_state: int,
+        high_score: int = 0,
+        high_level: int = 0
     ) -> None:
 
         if not self._screen:
@@ -82,7 +84,7 @@ class Renderer:
         if current_piece:
             self._draw_piece(current_piece)
 
-        self._draw_ui(score, lines, level, held_piece, next_piece)
+        self._draw_ui(score, lines, level, held_piece, next_piece, high_score, high_level)
 
 
     def _draw_board(self, board: Board) -> None:
@@ -166,7 +168,9 @@ class Renderer:
         lines: int,
         level: int,
         held_piece: Optional[Tetromino],
-        next_piece: Optional[Tetromino]
+        next_piece: Optional[Tetromino],
+        high_score: int = 0,
+        high_level: int = 0
     ) -> None:
 
         if not self._screen or not self._font or not self._small_font:
@@ -174,6 +178,7 @@ class Renderer:
 
         ui_x = BOARD_X + BOARD_WIDTH * CELL_SIZE + 50
 
+        # Current stats
         level_text = self._font.render(f"Level: {level}", True, COLOR_WHITE)
         self._screen.blit(level_text, (ui_x, 30))
 
@@ -183,21 +188,28 @@ class Renderer:
         lines_text = self._small_font.render(f"Lines: {lines}", True, COLOR_WHITE)
         self._screen.blit(lines_text, (ui_x, 130))
 
+        # High score and high level
+        high_score_text = self._small_font.render(f"Best Score: {high_score}", True, (100, 200, 255))
+        self._screen.blit(high_score_text, (ui_x, 160))
+
+        high_level_text = self._small_font.render(f"Best Level: {high_level}", True, (100, 200, 255))
+        self._screen.blit(high_level_text, (ui_x, 180))
+
         held_label = self._small_font.render("HOLD", True, (100, 200, 255))
-        self._screen.blit(held_label, (ui_x, 180))
+        self._screen.blit(held_label, (ui_x, 220))
 
         if held_piece:
-            self._draw_preview_piece(held_piece, ui_x, 210)
+            self._draw_preview_piece(held_piece, ui_x, 250)
         else:
-            pygame.draw.rect(self._screen, COLOR_GRAY, (ui_x, 210, 80, 80), 2)
+            pygame.draw.rect(self._screen, COLOR_GRAY, (ui_x, 250, 80, 80), 2)
 
         next_label = self._small_font.render("NEXT", True, (100, 200, 255))
-        self._screen.blit(next_label, (ui_x, 310))
+        self._screen.blit(next_label, (ui_x, 350))
 
         if next_piece:
-            self._draw_preview_piece(next_piece, ui_x, 340)
+            self._draw_preview_piece(next_piece, ui_x, 380)
 
-        inst_y = 440
+        inst_y = 480
 
         instructions = [
             "Arrow Keys: Move",
@@ -283,11 +295,12 @@ class Renderer:
         score: int,
         lines: int,
         level: int,
-        high_score: int = 0
+        high_score: int = 0,
+        high_level: int = 0
     ) -> None:
 
         if self._game_over_screen:
-            self._game_over_screen.render(score, lines, level, high_score)
+            self._game_over_screen.render(score, lines, level, high_score, high_level)
             pygame.display.flip()
 
     def update_game_over(self, mouse_pos: tuple) -> None:

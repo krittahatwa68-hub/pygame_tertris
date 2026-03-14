@@ -268,7 +268,7 @@ class Game:
         # Check for game over
         if not CollisionSystem.is_valid_position(self._current_piece, self._board):
             self._state_machine.change_state(GAME_OVER)
-            self._scoring.update_high_score(self._score)
+            self._scoring.update_high_score(self._score, self._gravity.get_level())
             self._sound_manager.play_game_over()
 
     def _hold_piece(self) -> None:
@@ -316,7 +316,9 @@ class Game:
                 self._score,
                 self._lines,
                 self._gravity.get_level(),
-                state
+                state,
+                self._scoring.get_high_score(),
+                self._scoring.get_high_level()
             )
 
             if state == GAME_PAUSED:
@@ -330,7 +332,8 @@ class Game:
                 self._score,
                 self._lines,
                 self._gravity.get_level(),
-                self._scoring.get_high_score()
+                self._scoring.get_high_score(),
+                self._scoring.get_high_level()
             )   
 
     def run(self) -> None:

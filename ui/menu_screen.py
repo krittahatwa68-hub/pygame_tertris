@@ -148,7 +148,7 @@ class GameOverScreen:
         self._menu_button = Button(menu_x, button_y, BUTTON_WIDTH, BUTTON_HEIGHT, "Menu")
         self._exit_button = Button(exit_x, button_y, BUTTON_WIDTH, BUTTON_HEIGHT, "Quit")
 
-    def render(self, score, lines, level, high_score=0):
+    def render(self, score, lines, level, high_score=0, high_level=0):
 
         self._screen.fill(COLOR_BLACK)
 
@@ -161,8 +161,25 @@ class GameOverScreen:
         self._screen.blit(title, title_rect)
 
         score_text = self._font.render(f"Score: {score}", True, COLOR_WHITE)
-        score_rect = score_text.get_rect(center=(WINDOW_WIDTH // 2, 220))
+        score_rect = score_text.get_rect(center=(WINDOW_WIDTH // 2, 190))
         self._screen.blit(score_text, score_rect)
+
+        level_text = self._font.render(f"Level: {level}", True, COLOR_WHITE)
+        level_rect = level_text.get_rect(center=(WINDOW_WIDTH // 2, 250))
+        self._screen.blit(level_text, level_rect)
+
+        lines_text = self._font.render(f"Lines: {lines}", True, COLOR_WHITE)
+        lines_rect = lines_text.get_rect(center=(WINDOW_WIDTH // 2, 310))
+        self._screen.blit(lines_text, lines_rect)
+
+        # Display high score and high level
+        high_score_text = self._font.render(f"Best Score: {high_score}", True, (100, 200, 255))
+        high_score_rect = high_score_text.get_rect(center=(WINDOW_WIDTH // 2, 370))
+        self._screen.blit(high_score_text, high_score_rect)
+
+        high_level_text = self._font.render(f"Best Level: {high_level}", True, (100, 200, 255))
+        high_level_rect = high_level_text.get_rect(center=(WINDOW_WIDTH // 2, 420))
+        self._screen.blit(high_level_text, high_level_rect)
 
         self._menu_button.draw(self._screen, self._font)
         self._exit_button.draw(self._screen, self._font)
