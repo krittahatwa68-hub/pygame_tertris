@@ -3,7 +3,6 @@
 
 เกมนี้สาธิตหลักการ **OOP (Object-Oriented Programming)** และ **SOLID Principles** ผ่านการสร้างเกม Tetris ที่สมบูรณ์
 
-📚 **เพื่ออ่านรายละเอียดเกี่ยวกับการออกแบบและสถาปัตยกรรม** โปรดดู **[PRESENT.md](PRESENT.md)**
 
 ---
 
