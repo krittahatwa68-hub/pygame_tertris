@@ -26,7 +26,7 @@ class Board:
         """
         self._width = width
         self._height = height
-        self._grid: List[List[Tuple[int, int, int]]] = [
+        self.__grid: List[List[Tuple[int, int, int]]] = [
             [COLOR_BLACK for _ in range(width)] for _ in range(height)
         ]
     
@@ -53,7 +53,7 @@ class Board:
         for x, y in piece.get_blocks():
             if x < 0 or x >= self._width or y < 0 or y >= self._height:
                 return False
-            if y >= 0 and self._grid[y][x] != COLOR_BLACK:
+            if y >= 0 and self.__grid[y][x] != COLOR_BLACK:
                 return False
         return True
     
@@ -67,12 +67,12 @@ class Board:
         color = piece.get_color()
         for x, y in piece.get_blocks():
             if 0 <= x < self._width and 0 <= y < self._height:
-                self._grid[y][x] = color
+                self.__grid[y][x] = color
     
     def get_cell(self, x: int, y: int) -> Tuple[int, int, int]:
         """Get color of cell at position"""
         if 0 <= x < self._width and 0 <= y < self._height:
-            return self._grid[y][x]
+            return self.__grid[y][x]
         return COLOR_BLACK
     
     def clear_rows(self) -> int:
@@ -86,11 +86,11 @@ class Board:
         y = self._height - 1
         
         while y >= 0:
-            if all(cell != COLOR_BLACK for cell in self._grid[y]):
+            if all(cell != COLOR_BLACK for cell in self.__grid[y]):
                 # Remove completed row
-                self._grid.pop(y)
+                self.__grid.pop(y)
                 # Add empty row at top
-                self._grid.insert(0, [COLOR_BLACK for _ in range(self._width)])
+                self.__grid.insert(0, [COLOR_BLACK for _ in range(self._width)])
                 rows_cleared += 1
             else:
                 y -= 1
@@ -99,11 +99,11 @@ class Board:
     
     def get_grid(self) -> List[List[Tuple[int, int, int]]]:
         """Get board grid (for rendering)"""
-        return self._grid
+        return self.__grid
     
     def reset(self) -> None:
         """Reset board to empty state"""
-        self._grid = [
+        self.__grid = [
             [COLOR_BLACK for _ in range(self._width)] 
             for _ in range(self._height)
         ]
