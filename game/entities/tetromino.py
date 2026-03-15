@@ -27,7 +27,7 @@ class Tetromino(ABC):
         self._x = x
         self._y = y
         self._rotation = 0
-        self._blocks = self._define_blocks()
+        self.__blocks = self._define_blocks()
     
     @property
     def x(self) -> int:
@@ -52,7 +52,7 @@ class Tetromino(ABC):
     @property
     def shape(self) -> List[List[Tuple[int, int]]]:
         """Get all rotation shapes for this piece"""
-        return self._blocks
+        return self.__blocks
     
     def move(self, dx: int, dy: int) -> None:
         """Move piece by delta"""
@@ -66,11 +66,11 @@ class Tetromino(ABC):
     
     def rotate(self) -> None:
         """Rotate piece - Polymorphism: each piece has own rotation logic"""
-        self._rotation = (self._rotation + 1) % len(self._blocks)
+        self._rotation = (self._rotation + 1) % len(self.__blocks)
     
     @abstractmethod
     def _define_blocks(self) -> List[List[Tuple[int, int]]]:
-        """
+        """ 
         Define all rotation states for this piece
         Abstract method: must be implemented by subclasses
         
@@ -87,7 +87,7 @@ class Tetromino(ABC):
             List of (relative_x, relative_y) for each block
         """
         return [(self._x + bx, self._y + by) 
-                for bx, by in self._blocks[self._rotation]]
+                for bx, by in self.__blocks[self._rotation]]
     
     @abstractmethod
     def get_color(self) -> Tuple[int, int, int]:
