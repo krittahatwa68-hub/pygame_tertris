@@ -14,7 +14,7 @@ from config.config import (
 
 from game.world.board import Board
 from game.entities.tetromino import Tetromino
-from ui.menu_screen import MenuScreen, GameOverScreen, PauseScreen
+from ui.menu_screen import MenuScreen, GameOverScreen, PauseScreen, GameplayButtons
 
 
 class Renderer:
@@ -37,6 +37,7 @@ class Renderer:
         self._menu_screen: Optional[MenuScreen] = None
         self._game_over_screen: Optional[GameOverScreen] = None
         self._pause_screen: Optional[PauseScreen] = None
+        self._gameplay_buttons: Optional[GameplayButtons] = None
 
     def init(self) -> None:
         """Initialize pygame and create window"""
@@ -54,6 +55,7 @@ class Renderer:
         self._menu_screen = MenuScreen(self._screen, self._font)
         self._game_over_screen = GameOverScreen(self._screen, self._font)
         self._pause_screen = PauseScreen(self._screen, self._font)
+        self._gameplay_buttons = GameplayButtons(self._screen, self._font, self._small_font)
 
     def render(
         self,
@@ -85,6 +87,10 @@ class Renderer:
             self._draw_piece(current_piece)
 
         self._draw_ui(score, lines, level, held_piece, next_piece, high_score, high_level)
+        
+        # Draw gameplay buttons
+        if self._gameplay_buttons:
+            self._gameplay_buttons.render()
 
 
     def _draw_board(self, board: Board) -> None:
@@ -313,6 +319,25 @@ class Renderer:
         if self._game_over_screen:
             return self._game_over_screen.handle_click(mouse_pos)
 
+        return None
+
+    def update_gameplay_buttons(self, mouse_pos: tuple) -> None:
+        """Update gameplay buttons based on mouse position"""
+        if self._gameplay_buttons:
+            self._gameplay_buttons.update(mouse_pos)
+
+    def handle_gameplay_button_click(self, mouse_pos: tuple) -> Optional[str]:
+        """
+        Handle gameplay button clicks
+        
+        Args:
+            mouse_pos: Mouse position
+            
+        Returns:
+            Button action string or None
+        """
+        if self._gameplay_buttons:
+            return self._gameplay_buttons.get_clicked_action(mouse_pos)
         return None
 
     def quit(self) -> None:

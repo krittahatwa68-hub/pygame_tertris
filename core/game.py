@@ -168,6 +168,30 @@ class Game:
 
     def update_gameplay(self, action: InputAction, delta_time: float) -> None:
         """Update gameplay state"""
+        # Update button hover states
+        mouse_pos = self._input.get_mouse_pos()
+        self._renderer.update_gameplay_buttons(mouse_pos)
+        
+        # Handle button clicks
+        if action == InputAction.CLICK:
+            button_action = self._renderer.handle_gameplay_button_click(mouse_pos)
+            if button_action == 'rotate_cw':
+                action = InputAction.ROTATE
+            elif button_action == 'rotate_ccw':
+                action = InputAction.ROTATE_CCW
+            elif button_action == 'drop':
+                action = InputAction.DROP
+            elif button_action == 'hold':
+                action = InputAction.HOLD
+            elif button_action == 'pause':
+                action = InputAction.PAUSE
+            elif button_action == 'left':
+                action = InputAction.MOVE_LEFT
+            elif button_action == 'down':
+                action = InputAction.MOVE_DOWN
+            elif button_action == 'right':
+                action = InputAction.MOVE_RIGHT
+        
         if action == InputAction.PAUSE:
             self._state_machine.change_state(GAME_PAUSED)
             return
