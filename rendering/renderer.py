@@ -14,7 +14,7 @@ from config.config import (
 
 from game.world.board import Board
 from game.entities.tetromino import Tetromino
-from ui.menu_screen import MenuScreen, GameOverScreen, PauseScreen, GameplayButtons
+from ui.menu_screen import MenuScreen, GameOverScreen, PauseScreen
 
 
 class Renderer:
@@ -37,7 +37,6 @@ class Renderer:
         self._menu_screen: Optional[MenuScreen] = None
         self._game_over_screen: Optional[GameOverScreen] = None
         self._pause_screen: Optional[PauseScreen] = None
-        self._gameplay_buttons: Optional[GameplayButtons] = None
 
     def init(self) -> None:
         """Initialize pygame and create window"""
@@ -55,7 +54,6 @@ class Renderer:
         self._menu_screen = MenuScreen(self._screen, self._font)
         self._game_over_screen = GameOverScreen(self._screen, self._font)
         self._pause_screen = PauseScreen(self._screen, self._font)
-        self._gameplay_buttons = GameplayButtons(self._screen, self._font, self._small_font)
 
     def render(
         self,
@@ -87,10 +85,6 @@ class Renderer:
             self._draw_piece(current_piece)
 
         self._draw_ui(score, lines, level, held_piece, next_piece, high_score, high_level)
-        
-        # Draw gameplay buttons
-        if self._gameplay_buttons:
-            self._gameplay_buttons.render()
 
 
     def _draw_board(self, board: Board) -> None:
@@ -218,21 +212,24 @@ class Renderer:
         inst_y = 480
 
         instructions = [
-            "Arrow Keys: Move",
-            "Z: Rotate",
-            "Space: Drop",
-            "C: Hold",
-            "P: Pause",
+            ("Left/Right", "Move Left/Right"),
+            ("Up", "Rotate Clockwise"),
+            ("Z", "Rotate Counter"),
+            ("Space", "Hard Drop"),
+            ("C", "Hold Piece"),
+            ("P", "Pause Game"),
         ]
 
-        inst_label = self._small_font.render("CONTROLS", True, (100, 200, 255))
+        inst_label = self._small_font.render("GAME CONTROLS", True, (100, 200, 255))
         self._screen.blit(inst_label, (ui_x, inst_y - 20))
 
-        for i, instruction in enumerate(instructions):
+        for i, (key, action) in enumerate(instructions):
 
-            text = self._small_font.render(instruction, True, COLOR_WHITE)
+            key_text = self._small_font.render(key, True, (255, 165, 0))
+            action_text = self._small_font.render(action, True, COLOR_WHITE)
 
-            self._screen.blit(text, (ui_x, inst_y + i * 25))
+            self._screen.blit(key_text, (ui_x, inst_y + i * 25))
+            self._screen.blit(action_text, (ui_x + 80, inst_y + i * 25))
 
     def _draw_preview_piece(self, piece: Tetromino, x: int, y: int) -> None:
 
@@ -319,25 +316,6 @@ class Renderer:
         if self._game_over_screen:
             return self._game_over_screen.handle_click(mouse_pos)
 
-        return None
-
-    def update_gameplay_buttons(self, mouse_pos: tuple) -> None:
-        """Update gameplay buttons based on mouse position"""
-        if self._gameplay_buttons:
-            self._gameplay_buttons.update(mouse_pos)
-
-    def handle_gameplay_button_click(self, mouse_pos: tuple) -> Optional[str]:
-        """
-        Handle gameplay button clicks
-        
-        Args:
-            mouse_pos: Mouse position
-            
-        Returns:
-            Button action string or None
-        """
-        if self._gameplay_buttons:
-            return self._gameplay_buttons.get_clicked_action(mouse_pos)
         return None
 
     def quit(self) -> None:
